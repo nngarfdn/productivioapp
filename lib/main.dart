@@ -2,10 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:productivioapp/features/auth/presentation/pages/loginpage.dart';
 import 'package:productivioapp/features/auth/presentation/pages/registerpage.dart';
 import 'package:productivioapp/core/constants/routes.dart';
+import 'package:productivioapp/features/auth/presentation/viewmodel/auth_viewmodel.dart';
+import 'package:provider/provider.dart';
+
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,8 +28,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       initialRoute: Routes.login,
       routes: {
-        Routes.login : (context) => LoginPage(),
-        Routes.register: (context) => RegisterPage(),
+        Routes.login: (context) => const LoginPage(),
+        Routes.register: (context) => const RegisterPage(),
       },
     );
   }
