@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:productivioapp/features/auth/presentation/viewmodel/auth_viewmodel.dart';
-import 'package:productivioapp/core/constants/routes.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/auth_bloc.dart';
+import '../bloc/auth_event.dart';
+import '../bloc/auth_state.dart';
 
 class LoginWidgets {
   static Widget buildTitle() {
@@ -16,77 +17,84 @@ class LoginWidgets {
     );
   }
 
-  static Widget buildEmailField(AuthViewModel authViewModel) {
-    return TextField(
-      controller: authViewModel.emailController,
-      decoration: _buildInputDecoration(
-        label: 'Email',
-        prefixIcon: Icons.email,
-      ),
-      keyboardType: TextInputType.emailAddress,
-      style: const TextStyle(color: Color(0xFF21262C)),
+  static Widget buildEmailField(BuildContext context) {
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        return TextField(
+          onChanged: (email) => context.read<AuthBloc>().add(EmailChanged(email)),
+          decoration: _buildInputDecoration(
+            label: 'Email',
+            prefixIcon: Icons.email,
+          ),
+          keyboardType: TextInputType.emailAddress,
+          style: const TextStyle(color: Color(0xFF21262C)),
+        );
+      },
     );
   }
 
-  static Widget buildPasswordField(
-      AuthViewModel authViewModel, bool obscureText, VoidCallback toggleObscureText) {
-    return TextField(
-      controller: authViewModel.passwordController,
-      decoration: _buildInputDecoration(
-        label: 'Password',
-        prefixIcon: Icons.lock,
-        suffixIcon: IconButton(
-          icon: Icon(
-            obscureText ? Icons.visibility_off : Icons.visibility,
-            color: const Color(0xFF21262C),
+  static Widget buildPasswordField(BuildContext context) {
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        return TextField(
+          onChanged: (password) => context.read<AuthBloc>().add(PasswordChanged(password)),
+          decoration: _buildInputDecoration(
+            label: 'Password',
+            prefixIcon: Icons.lock,
+            suffixIcon: IconButton(
+              icon: Icon(
+                state.password.isEmpty ? Icons.visibility_off : Icons.visibility,
+                color: const Color(0xFF21262C),
+              ),
+              onPressed: () {
+                // Add toggle logic here if needed
+              },
+            ),
           ),
-          onPressed: toggleObscureText,
-        ),
-      ),
-      obscureText: obscureText,
-      style: const TextStyle(color: Color(0xFF21262C)),
+          obscureText: true,
+          style: const TextStyle(color: Color(0xFF21262C)),
+        );
+      },
     );
   }
 
-  static Widget buildLoginButton({
-    required bool isLoading,
-    required VoidCallback onPressed,
-    String text = 'Login',
-    Color backgroundColor = const Color(0xFF21262C),
-    Color textColor = Colors.white,
-    double fontSize = 16,
-    FontWeight fontWeight = FontWeight.w600,
-    double borderRadius = 24,
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(vertical: 16),
-  }) {
-    return isLoading
-        ? const Center(child: CircularProgressIndicator())
-        : SizedBox(
-      width: double.infinity, // Makes the button take full parent width
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
+  static Widget buildLoginButton(BuildContext context) {
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        return SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              context.read<AuthBloc>().add(LoginSubmitted());
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF21262C),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 16),
+            ),
+            child: const Text(
+              'Login',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
-          padding: padding,
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: textColor,
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
+
   static Widget buildRegisterButton(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Navigator.pushNamed(context, Routes.register);
+        Navigator.pushNamed(context, '/register'); // Update the route as needed
       },
       child: const Text(
         'Register Account',

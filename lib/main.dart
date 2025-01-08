@@ -1,21 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:productivioapp/features/auth/presentation/pages/loginpage.dart';
-import 'package:productivioapp/features/auth/presentation/pages/registerpage.dart';
+import 'package:productivioapp/features/auth/presentation/pages/login_page.dart';
+import 'package:productivioapp/features/auth/presentation/pages/register_page.dart';
 import 'package:productivioapp/core/constants/routes.dart';
-import 'package:productivioapp/features/auth/presentation/viewmodel/auth_viewmodel.dart';
-import 'package:provider/provider.dart';
-
 
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthViewModel()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
