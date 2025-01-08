@@ -17,11 +17,12 @@ class LoginWidgets {
     );
   }
 
-  static Widget buildEmailField(BuildContext context) {
+  static Widget buildEmailField(AuthBloc authBloc) {
     return BlocBuilder<AuthBloc, AuthState>(
+      bloc: authBloc, // Explicitly pass the bloc
       builder: (context, state) {
         return TextField(
-          onChanged: (email) => context.read<AuthBloc>().add(EmailChanged(email)),
+          onChanged: (email) => authBloc.add(EmailChanged(email)),
           decoration: _buildInputDecoration(
             label: 'Email',
             prefixIcon: Icons.email,
@@ -33,11 +34,12 @@ class LoginWidgets {
     );
   }
 
-  static Widget buildPasswordField(BuildContext context) {
+  static Widget buildPasswordField(AuthBloc authBloc) {
     return BlocBuilder<AuthBloc, AuthState>(
+      bloc: authBloc, // Explicitly pass the bloc
       builder: (context, state) {
         return TextField(
-          onChanged: (password) => context.read<AuthBloc>().add(PasswordChanged(password)),
+          onChanged: (password) => authBloc.add(PasswordChanged(password)),
           decoration: _buildInputDecoration(
             label: 'Password',
             prefixIcon: Icons.lock,
@@ -58,8 +60,9 @@ class LoginWidgets {
     );
   }
 
-  static Widget buildLoginButton(BuildContext context) {
+  static Widget buildLoginButton(AuthBloc authBloc) {
     return BlocBuilder<AuthBloc, AuthState>(
+      bloc: authBloc, // Explicitly pass the bloc
       builder: (context, state) {
         if (state.isLoading) {
           return const Center(child: CircularProgressIndicator());
@@ -68,7 +71,7 @@ class LoginWidgets {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
-              context.read<AuthBloc>().add(LoginSubmitted());
+              authBloc.add(LoginSubmitted());
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF21262C),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../injection.dart';
 import '../bloc/auth_bloc.dart';
 import '../widgets/login_widget.dart';
 
@@ -8,8 +9,10 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = sl<AuthBloc>(); // Resolve the AuthBloc instance
+
     return BlocProvider(
-      create: (context) => AuthBloc(),
+      create: (context) => authBloc, // Pass the resolved AuthBloc
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Center(
@@ -22,11 +25,11 @@ class LoginPage extends StatelessWidget {
                 children: [
                   LoginWidgets.buildTitle(),
                   const SizedBox(height: 24),
-                  LoginWidgets.buildEmailField(context),
+                  LoginWidgets.buildEmailField(authBloc), // Pass the AuthBloc instance
                   const SizedBox(height: 16),
-                  LoginWidgets.buildPasswordField(context),
+                  LoginWidgets.buildPasswordField(authBloc), // Pass the AuthBloc instance
                   const SizedBox(height: 32),
-                  LoginWidgets.buildLoginButton(context),
+                  LoginWidgets.buildLoginButton(authBloc), // Pass the AuthBloc instance
                   const SizedBox(height: 16),
                   LoginWidgets.buildRegisterButton(context),
                 ],

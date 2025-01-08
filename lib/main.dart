@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'injection.dart' as di; // Import the service locator setup file
 import 'package:productivioapp/features/auth/presentation/pages/login_page.dart';
 import 'package:productivioapp/features/auth/presentation/pages/register_page.dart';
 import 'package:productivioapp/core/constants/routes.dart';
 
 
-void main() {
+void main() async {
+  await di.init();
   runApp(const MyApp());
 }
 
@@ -13,6 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('BuildingMyApp: called');
     return MaterialApp(
       title: 'Auth Module',
       theme: ThemeData(primarySwatch: Colors.blue),
