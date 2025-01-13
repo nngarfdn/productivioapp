@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "83334641922",
+    "project_id": "productivio-d4eb5",
+    "storage_bucket": "productivio-d4eb5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:83334641922:android:5c2d78353e03a15d9a2a1b",
+        "android_client_info": {
+          "package_name": "com.mobapp.productivioapp.productivioapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDcdL0EeaHSGex84egdY7HF6FqhygRMXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

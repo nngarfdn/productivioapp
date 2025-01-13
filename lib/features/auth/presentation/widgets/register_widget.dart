@@ -1,21 +1,28 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/auth_bloc.dart';
-import '../bloc/auth_event.dart';
-import '../bloc/auth_state.dart';
 
-typedef StateCallback = void Function(BuildContext context, AuthBloc authBloc);
-
-class LoginWidgets {
+class RegisterWidgets {
   static Widget buildTitle() {
     return const Text(
-      'Login',
+      'Register',
       style: TextStyle(
         fontFamily: 'DMSans',
         fontWeight: FontWeight.w600,
         fontSize: 26,
         color: Colors.black,
       ),
+    );
+  }
+
+  static Widget buildNameField({required ValueChanged<String> onNameChanged}) {
+    return TextField(
+      onChanged: onNameChanged,
+      decoration: _buildInputDecoration(
+        label: 'Name',
+        prefixIcon: Icons.person,
+      ),
+      keyboardType: TextInputType.name,
+      style: const TextStyle(color: Color(0xFF21262C)),
     );
   }
 
@@ -54,8 +61,8 @@ class LoginWidgets {
     );
   }
 
-  static Widget buildLoginButton({
-    required VoidCallback onLoginPressed,
+  static Widget buildRegisterButton({
+    required VoidCallback onRegisterPressed,
     required bool isLoading,
   }) {
     if (isLoading) {
@@ -65,7 +72,7 @@ class LoginWidgets {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: onLoginPressed,
+        onPressed: onRegisterPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF21262C),
           shape: RoundedRectangleBorder(
@@ -74,7 +81,7 @@ class LoginWidgets {
           padding: const EdgeInsets.symmetric(vertical: 16),
         ),
         child: const Text(
-          'Login',
+          'Register',
           style: TextStyle(
             color: Colors.white,
             fontSize: 16,
@@ -85,13 +92,13 @@ class LoginWidgets {
     );
   }
 
-  static Widget buildRegisterButton(BuildContext context) {
+  static Widget buildLoginRedirectButton(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Navigator.pushNamed(context, '/register');
+        Navigator.pushNamed(context, '/login');
       },
       child: const Text(
-        'Register Account',
+        'Already have an account? Login',
         style: TextStyle(
           fontFamily: 'DMSans',
           fontWeight: FontWeight.w600,

@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import '../../../../core/model/resource.dart';
 import '../repositories/auth_repository.dart';
 
 class LoginUseCase {
@@ -5,8 +7,7 @@ class LoginUseCase {
 
   LoginUseCase(this.authRepository);
 
-  Future<String> execute(String email, String password) {
-    // Delegate to the repository
+  Future<Resource<User>> execute(String email, String password) {
     return authRepository.login(email, password);
   }
 }
