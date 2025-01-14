@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:productivioapp/features/auth/presentation/bloc/auth_state.dart';
 import '../../../../injection.dart';
@@ -12,7 +13,8 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authBloc = sl<AuthBloc>();
-
+    String email = '';
+    String password = '';
     return BlocProvider(
       create: (context) => authBloc,
       child: Scaffold(
@@ -23,6 +25,26 @@ class LoginPage extends StatelessWidget {
             child: SingleChildScrollView(
               child: BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
+                  if (state.status == AuthStatus.success) {
+                    SchedulerBinding.instance.addPostFrameCallback((_) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('Login successful'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    });
+                    // Navigator.of(context).pushNamed('/home');
+                  } else if (state.status == AuthStatus.failure) {
+                    SchedulerBinding.instance.addPostFrameCallback((_) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.errorMessage!),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    });
+                  }
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,21 +52,22 @@ class LoginPage extends StatelessWidget {
                       LoginWidgets.buildTitle(),
                       const SizedBox(height: 24),
                       LoginWidgets.buildEmailField(
-                        onEmailChanged: (email) =>
-                            authBloc.add(EmailChanged(email)),
+                        onEmailChanged: (value) => email = value,
                       ),
                       const SizedBox(height: 16),
                       LoginWidgets.buildPasswordField(
-                        onPasswordChanged: (password) =>
-                            authBloc.add(PasswordChanged(password)),
+                        onPasswordChanged: (value) => password = value,
                         onTogglePasswordVisibility: () =>
                             authBloc.add(const TogglePasswordVisibility()),
                         isPasswordVisible: state.isPasswordVisible,
                       ),
                       const SizedBox(height: 32),
                       LoginWidgets.buildLoginButton(
-                        onLoginPressed: () =>
-                            authBloc.add(const LoginSubmitted()),
+                        onLoginPressed: () {
+                          authBloc.add(EmailChanged(email));
+                          authBloc.add(PasswordChanged(password));
+                          authBloc.add(const LoginSubmitted());
+                        },
                         isLoading: state.status == AuthStatus.loading,
                       ),
                       const SizedBox(height: 16),
