@@ -23,28 +23,22 @@ class LoginPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(32.0),
             child: SingleChildScrollView(
-              child: BlocBuilder<AuthBloc, AuthState>(
-                builder: (context, state) {
+              child: BlocConsumer<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  // Handle navigation and showing SnackBars here
                   if (state.status == AuthStatus.success) {
-                    SchedulerBinding.instance.addPostFrameCallback((_) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: const Text('Login successful'),
-                          backgroundColor: Colors.green,
-                        ),
-                      );
-                    });
-                    // Navigator.of(context).pushNamed('/home');
+                    Navigator.of(context).pushNamed('/home');
                   } else if (state.status == AuthStatus.failure) {
-                    SchedulerBinding.instance.addPostFrameCallback((_) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(state.errorMessage!),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.errorMessage!),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
                   }
+                },
+                builder: (context, state) {
+                  // Build the UI here
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,

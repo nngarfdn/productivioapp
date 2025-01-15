@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:productivioapp/core/widgets/generaltoolbar.dart';
+import 'package:productivioapp/core/widgets/general_toolbar.dart';
 
 import '../../../../injection.dart';
 import '../bloc/auth_bloc.dart';

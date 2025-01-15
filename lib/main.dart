@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:productivioapp/features/home/presentation/pages/home_page.dart';
 import 'injection.dart' as di; // Import the service locator setup file
 import 'package:productivioapp/features/auth/presentation/pages/login_page.dart';
 import 'package:productivioapp/features/auth/presentation/pages/register_page.dart';
@@ -30,10 +31,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Auth Module',
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: Routes.login,
+      initialRoute: Routes.home,
       routes: {
         Routes.login: (context) => const LoginPage(),
         Routes.register: (context) => const RegisterPage(),
+        Routes.home: (context) => const HomePage(),
       },
     );
   }
