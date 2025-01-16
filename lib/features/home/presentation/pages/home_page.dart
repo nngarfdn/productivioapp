@@ -79,6 +79,7 @@ class HomePage extends StatelessWidget {
         onPressed: () {
           // Add your floating action button logic here
           print("Floating action button pressed");
+          Navigator.pushNamed(context, '/add_edit_task');
         },
         backgroundColor: Colors.black,
         shape: const CircleBorder(), // Change the background color to match the dark theme

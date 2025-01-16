@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:productivioapp/features/add_edit_task/presentation/pages/add_edit_task_page.dart';
 import 'package:productivioapp/features/home/presentation/pages/home_page.dart';
 import 'injection.dart' as di; // Import the service locator setup file
 import 'package:productivioapp/features/auth/presentation/pages/login_page.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         Routes.login: (context) => const LoginPage(),
         Routes.register: (context) => const RegisterPage(),
         Routes.home: (context) => const HomePage(),
+        Routes.addEditTask: (context) => const AddEditTaskPage(),
       },
     );
   }
