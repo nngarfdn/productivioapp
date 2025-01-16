@@ -114,6 +114,8 @@ class AddEditTaskWidgets {
     return ElevatedButton(
       onPressed: onSave,
       style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.black, // Set a distinct background color
+        foregroundColor: Colors.white, // Set the text color
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
@@ -122,7 +124,7 @@ class AddEditTaskWidgets {
     );
   }
 
-  // Cancel button
+  // Cancel button with custom outline
   static Widget buildCancelButton({
     required VoidCallback onCancel,
   }) {
@@ -132,7 +134,8 @@ class AddEditTaskWidgets {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
         ),
-        side: const BorderSide(color: Colors.grey),
+        side: const BorderSide(color: Colors.black), // Gray border
+        foregroundColor: Colors.black, // Set text color to match the border
       ),
       child: const Text('Cancel'),
     );
