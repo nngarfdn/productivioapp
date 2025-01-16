@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:productivioapp/features/auth/presentation/bloc/auth_state.dart';
 import '../../../../injection.dart';

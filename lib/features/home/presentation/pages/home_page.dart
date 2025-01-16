@@ -75,6 +75,18 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your floating action button logic here
+          print("Floating action button pressed");
+        },
+        backgroundColor: Colors.black,
+        shape: const CircleBorder(), // Change the background color to match the dark theme
+        child: const Icon(
+          Icons.add,
+          color: Colors.white, // Set the icon color to white
+        ), // Ensures the button remains circular
+      ),
     );
   }
 }
